@@ -18,7 +18,8 @@ export const getProducts = async (req, res, next) => {
 
 export const getProductById=async(req,res,next)=>{
   try {
-    const {productId}=req.params.id
+    const productId=req.params.id
+    console.log(productId)
     const dbResProduct = await readProdDB(productId)
     if(dbResProduct && dbResProduct!==null){
       res.send(dbResProduct)
@@ -52,9 +53,9 @@ export const addProduct = async (req, res, next) => {
   }
 };
 
-export const deleteProduct = async (req, resp, next) => {
+export const deleteProduct = async (req, res, next) => {
   try {
-    const {productId} = req.params.id
+    const productId = req.params.id
     const dbRes = await deleteProductDB(productId)
     if(dbRes){
       res.send(`Producto con id ${productId} borrado con exito`)
@@ -65,9 +66,9 @@ export const deleteProduct = async (req, resp, next) => {
     return next(error)
   }
 };
-export const updateProduct = async ()=>{
+export const updateProduct = async (req,res,next)=>{
   try {
-    const {productId}= req.params.id
+    const productId= req.params.id
     const newProd = req.body
     const dbRes = updateProdDB(productId,newProd)
     if(dbRes){

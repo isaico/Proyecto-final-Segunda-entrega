@@ -1,10 +1,8 @@
-import res from 'express/lib/response';
 import { getCartDB } from '../modules/carts/getCart.js';
 import {
   addProductToCartDB,
-  deleteAllCartsDB,
+  deleteCartDB,
   deleteCartProductDB,
-  readAllCartProductsDB,
   createCartDB,
 } from '../modules/index.js';
 
@@ -23,9 +21,8 @@ export const createCart = async (req, res, next) => {
 
 export const getCart = async (req, res, next) => {
   try {
-    const { cartId } = req.params.id;
+    const cartId = req.params.id;
     const cart = await getCartDB(cartId);
-
     if (cart) {
       res.send(cart);
     } else {
@@ -38,15 +35,46 @@ export const getCart = async (req, res, next) => {
   }
 };
 
-export const addProductToCart = async (req, resp, next) => {
+export const addProductToCart = async (req, res, next) => {
   try {
-    const { cartId } = req.params.id;
-    const { productId } = req.params.productId;
-    const { qty } = req.body.amount;
+    const cartId = req.params.id;
+    const productId = req.params.productId;
+    const qty = req.body.amount;
     const dbRes = await addProductToCartDB(cartId, productId, qty);
     if (dbRes) {
       res.send(
         `Producto con id ${productId} añadido al carrito con id ${cartId}`
+      );
+    } else {
+      throw dbRes;
+    }
+  } catch (error) {
+    error.status = 500;
+    next(error);
+  }
+};
+export const deleteCart = (req, res, next) => {
+  try {
+    const cartId = req.params.id;
+    const dbRes = deleteCartDB(cartId);
+    if (dbRes) {
+      res.send(`Carrito con id ${cartId} borrado`);
+    } else {
+      throw dbRes;
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const removeProductOnCart = async (req, res, next) => {
+  try {
+    const  cartId  = req.params.id;
+    const  productId  = req.params.productId;
+    const dbRes = await deleteCartProductDB(cartId, productId);
+    if (dbRes) {
+      res.send(
+        `Producto con id: ${productId} removido con exito del carrito con id: ${cartId}`
       );
     } else {
       throw dbRes;

@@ -1,12 +1,16 @@
-import 'dotenv';
+import 'dotenv/config';
 import express from 'express';
-import './src/configs/db.config.js'
+import {productRouter,cartRouter} from './src/Routes/index.js'
+
 
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/api',productRouter)
+app.use('/api',cartRouter)
 
 
 const server = app.listen(PORT, () => {

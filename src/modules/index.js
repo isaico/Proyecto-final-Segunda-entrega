@@ -1,14 +1,14 @@
-import { addProductDB } from './productos/addProd.js';
-import { deleteProductDB } from './productos/deleteProd.js';
-import { readProdDB } from './productos/readProd.js';
-import { addProductToCartDB } from './carts/addProdToCart.js';
-import { producto1 } from '../objectTest/test.js';
-import { deleteCartProductDB } from './carts/deleteCartProd.js';
-import { deleteAllCartsDB } from './carts/deleteAllCartProd.js';
-import { updateProdDB } from './productos/updateProd.js';
-import { readAllCartProductsDB } from './carts/readAllCartProd.js';
-import { createCartDB } from './carts/createCart.js';
-import { getCartDB } from './carts/getCart.js';
+// import { addProductDB } from './productos/addProd.js';
+// import { deleteProductDB } from './productos/deleteProd.js';
+// import { readProdDB } from './productos/readProd.js';
+// import { addProductToCartDB } from './carts/addProdToCart.js';
+// import { producto1 } from '../objectTest/test.js';
+// import { deleteCartProductDB } from './carts/deleteCartProd.js';
+// import { deleteAllCartsDB } from './carts/deleteAllCarts.js';
+// import { updateProdDB } from './productos/updateProd.js';
+// import { readAllCartProductsDB } from './carts/readAllCartProd.js';
+// import { createCartDB } from './carts/createCart.js';
+// import { getCartDB } from './carts/getCart.js';
 
 // producto1.nombre="ASDASD"
 /* -------------------------------- PRODUCTS -------------------------------- */
@@ -25,10 +25,10 @@ import { getCartDB } from './carts/getCart.js';
 // const productObjId=dbObject._id
 // const productId=productObjId.toHexString()
 // addProductToCartDB("62687de265e6421970dc1fb5","62642089a287055a85a2811f",1)
-// addProductToCartDB("62687de265e6421970dc1fb5","62642379b707928b12f504ae",producto1,1)
+// addProductToCartDB("62687de265e6421970dc1fb5","62642089a287055a85a2811f",1)
 // getCartDB("62687de265e6421970dc1fb5")
 // deleteAllCartProdsDB()
 // readAllCartProductsDB()
-// deleteCartProductDB("62642089a287055a85a2811f","62687de265e6421970dc1fb5")
+// deleteCartProductDB("62642379b707928b12f504ae","62687de265e6421970dc1fb5")
 export * from './productos/index.js';
 export * from './carts/index.js';
