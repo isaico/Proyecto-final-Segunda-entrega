@@ -1,36 +1,58 @@
 import res from 'express/lib/response';
+import { getCartDB } from '../modules/carts/getCart.js';
 import {
   addProductToCartDB,
-  deleteAllCartProdsDB,
+  deleteAllCartsDB,
   deleteCartProductDB,
   readAllCartProductsDB,
+  createCartDB,
 } from '../modules/index.js';
 
-export const getCart = async()=>{
-    try {
-        const dbResProducts = await readAllCartProductsDB()
-        if(dbResProducts){
-            res.send(dbResProducts)
-        } else{
-            if (dbResProducts.length === 0){
-                res.send("El carrito esta vacío")
-            }else{
-                const error = new Error (`El carrito no existe`)
-                error.code = 'CART_NOT_FOUND'
-                throw error
-            }
-        }
-    } catch (error) {
-        return next(error)
+export const createCart = async (req, res, next) => {
+  try {
+    const dbResp = await createCartDB();
+    if (dbResp) {
+      res.send({ id: dbResp });
+    } else {
+      throw dbResp;
     }
-}
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getCart = async (req, res, next) => {
+  try {
+    const { cartId } = req.params.id;
+    const cart = await getCartDB(cartId);
+
+    if (cart) {
+      res.send(cart);
+    } else {
+      const error = new Error(`El carrito con id ${cartId} no existe`);
+      error.code = 'CART_NOT_FOUND';
+      throw error;
+    }
+  } catch (error) {
+    return next(error);
+  }
+};
 
 export const addProductToCart = async (req, resp, next) => {
   try {
-    const {id}=req.params.id
-    const 
-    const dbRes = await addProductToCartDB();
-
-
-  } catch (error) {}
+    const { cartId } = req.params.id;
+    const { productId } = req.params.productId;
+    const { qty } = req.body.amount;
+    const dbRes = await addProductToCartDB(cartId, productId, qty);
+    if (dbRes) {
+      res.send(
+        `Producto con id ${productId} añadido al carrito con id ${cartId}`
+      );
+    } else {
+      throw dbRes;
+    }
+  } catch (error) {
+    error.status = 500;
+    next(error);
+  }
 };

@@ -1,12 +1,8 @@
 import mongoose from "mongoose";
 
 const Schema = new mongoose.Schema({
-    productos:{
-        type:Array,
-        default:[],
-        required:true
-    },
-    fecha:{
+   
+    timeStamp:{
         type:String
     },
     // _id:{
